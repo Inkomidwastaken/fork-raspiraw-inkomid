@@ -1042,6 +1042,13 @@ int main(int argc, char** argv) {
 
 	if (cfg.top > 0)
 	{
+                if (!strcmp(sensor->name, "imx219"))
+                {
+		        int val = cfg.top * (cfg.mode < 4 ? 1 : 2 );
+		        modReg(sensor_mode, 0x0168, 0, 3, val >>8, EQUAL);
+		        modReg(sensor_mode, 0x0169, 0, 7, val &0xFF, EQUAL);
+                }
+
                 if (!strcmp(sensor->name, "ov5647"))
                 {
 		        int val = cfg.top * (cfg.mode < 2 ? 1 : 1 << (cfg.mode / 2 - 1));
